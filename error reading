@@ -1,0 +1,64 @@
+ #include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int num_elements;
+
+    if (scanf("%d", &num_elements) != 1) {
+        fprintf(stderr, "Error reading number of elements.\n");
+        return 1;
+    }
+
+    if (num_elements <= 0) {
+      
+        if (num_elements == 0) {
+            printf("\n"); 
+        }
+        return 0;
+    }
+    int *input_array = (int *)malloc(num_elements * sizeof(int));
+    if (input_array == NULL) {
+        fprintf(stderr, "Memory allocation failed for input_array.\n");
+        return 1;
+    }
+
+    int *output_array = (int *)malloc(num_elements * sizeof(int));
+    if (output_array == NULL) {
+        fprintf(stderr, "Memory allocation failed for output_array.\n");
+        free(input_array);
+        return 1;
+    }
+
+    for (int i = 0; i < num_elements; i++) {
+        if (scanf("%d", &input_array[i]) != 1) {
+            fprintf(stderr, "Error reading element at index %d.\n", i);
+            free(input_array);
+            free(output_array);
+            return 1;
+        }
+    }
+
+    long long current_sum = 0; 
+    for (int i = 0; i < num_elements; i++) {
+        if (i == 0) {
+            output_array[i] = 0;
+        } else {
+            current_sum += input_array[i - 1]; 
+            output_array[i] = (int)current_sum;
+        }
+    }
+
+    
+    for (int i = 0; i < num_elements; i++) {
+        printf("%d", output_array[i]);
+        if (i < num_elements - 1) {
+            printf(" ");
+        }
+    }
+    printf("\n"); 
+
+    free(input_array);
+    free(output_array);
+
+    return 0; 
+}
